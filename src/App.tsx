@@ -2,7 +2,7 @@ import { Flex } from '@chakra-ui/react';
 import React from 'react';
 
 import { Provider } from './components/ui/provider';
-import { HomePage } from './pages/HomePage';
+import { Router } from './Router';
 
 const App: React.FC = () => {
     return (
@@ -14,7 +14,7 @@ const App: React.FC = () => {
                 minH="100dvh"
                 p={5}
             >
-                <HomePage />
+                <Router />
             </Flex>
         </Provider>
     );
