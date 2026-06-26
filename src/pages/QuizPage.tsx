@@ -3,6 +3,8 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 
+import { Question as QuestionComponent } from '../components/Question';
+
 interface Question {
     question: string;
     correct_answer: string;
@@ -18,6 +20,7 @@ export const QuizPage: React.FC = () => {
     const navigate = useNavigate();
 
     const [loading, setLoading] = useState(true);
+    const [questions, setQuestions] = useState<Question[]>([]);
 
     const loadQuiz = async () => {
         const response = await axios.get<ApiResponse>('https://opentdb.com/api.php', {
@@ -35,7 +38,8 @@ export const QuizPage: React.FC = () => {
             return;
         }
 
-        console.log(response.data);
+        setQuestions(response.data.results);
+        setLoading(false);
     }
 
     useEffect(() => {
@@ -47,5 +51,5 @@ export const QuizPage: React.FC = () => {
 
     if (loading) return <Loader />;
 
-    return <h1>Pagina de quiz!</h1>;
+    return <QuestionComponent />;
 }
