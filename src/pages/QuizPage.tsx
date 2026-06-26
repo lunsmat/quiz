@@ -21,6 +21,8 @@ export const QuizPage: React.FC = () => {
 
     const [loading, setLoading] = useState(true);
     const [questions, setQuestions] = useState<Question[]>([]);
+    const [currentQuestion, setCurrentQuestion] = useState(0);
+    const [correctAnswers, setCorrectAnswers] = useState(0);
 
     const loadQuiz = async () => {
         const response = await axios.get<ApiResponse>('https://opentdb.com/api.php', {
@@ -42,6 +44,24 @@ export const QuizPage: React.FC = () => {
         setLoading(false);
     }
 
+    const onAnswerSubmit = (correct: boolean) => {
+        const totalCorrect = correctAnswers + (correct ? 1 : 0);
+
+        if (currentQuestion >= questions.length - 1) {
+            alert("Quiz Finalizado Você acertou " + totalCorrect);
+            navigate('/');
+            return;
+        }
+
+        setCorrectAnswers(totalCorrect);
+        setCurrentQuestion(currentQuestion + 1);
+        setLoading(true);
+
+        setTimeout(() => {
+            setLoading(false);
+        }, 300);
+    }
+
     useEffect(() => {
         loadQuiz().catch(() => {
             alert("Erro Inesperado");
@@ -51,5 +71,8 @@ export const QuizPage: React.FC = () => {
 
     if (loading) return <Loader />;
 
-    return <QuestionComponent question={questions[0]} />;
+    return <QuestionComponent
+                question={questions[currentQuestion]}
+                answerSubmit={onAnswerSubmit}
+            />;
 }
