@@ -1,7 +1,21 @@
 import { Box, Button, Flex, Heading, SimpleGrid } from '@chakra-ui/react';
-import React from 'react';
+import React, { useMemo } from 'react';
 
-export const Question: React.FC = () => {
+interface IQuestion {
+    question: string;
+    correct_answer: string;
+    incorrect_answers: string[];
+}
+
+interface QuestionProps {
+    question: IQuestion;
+}
+
+export const Question: React.FC<QuestionProps> = ({ question }) => {
+    const aswers = useMemo(() => {
+        const answers = [...question.incorrect_answers, question.correct_answer];
+    }, []);
+
     return (
         <Flex
             direction="column"
@@ -13,7 +27,7 @@ export const Question: React.FC = () => {
         >
             <Box mb={10} textAlign="center">
                 <Heading size="3xl">
-                    O que significa HTML?
+                    {question.question}
                 </Heading>
             </Box>
 

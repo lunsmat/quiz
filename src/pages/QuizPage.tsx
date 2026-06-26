@@ -51,5 +51,5 @@ export const QuizPage: React.FC = () => {
 
     if (loading) return <Loader />;
 
-    return <QuestionComponent />;
+    return <QuestionComponent question={questions[0]} />;
 }
