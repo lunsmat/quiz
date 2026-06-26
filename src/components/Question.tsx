@@ -12,7 +12,7 @@ interface QuestionProps {
 }
 
 export const Question: React.FC<QuestionProps> = ({ question }) => {
-    const aswers = useMemo(() => {
+    const answers = useMemo(() => {
         const answers = [...question.incorrect_answers, question.correct_answer];
     }, []);
 
